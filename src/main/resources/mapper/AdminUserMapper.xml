@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zjitc.dao.AdminUserDao">
+
+  <insert id="addCategory" parameterType="string">
+  INSERT INTO category (cname) VALUE (#{cname})
+  </insert>
+
+  <insert id="addProduct">
+    INSERT INTO product
+    <trim prefix="(" suffix=")">
+      <if test="#{pname} != null">pname,</if>
+      <if test="#{price}!= null">price,</if>
+      <if test="#{image}!= null">image,</if>
+      <if test="#{pdesc}!= null">pdesc,</if>
+      <if test="#{cid}!= null">cid</if>
+    </trim>
+    VALUE
+    <trim prefix="(" suffix=")">
+      <if test="#{pname} != null">#{pname},</if>
+      <if test="#{price} != null">#{price},</if>
+      <if test="#{image} != null">#{image},</if>
+      <if test="#{pdesc} != null">#{pdesc},</if>
+      <if test="#{cid} != null">#{cid}</if>
+    </trim>
+  </insert>
+
+  <update id="productEdit">
+    UPDATE product
+    <set>
+      <if test="#{pname}!= null">pname=#{pname},</if>
+      <if test="#{price}!= null">price=#{price},</if>
+      <if test="#{pdesc}!= null">pdesc=#{pdesc},</if>
+      <if test="#{cid}!= null">cid=#{cid}</if>
+    </set>
+    WHERE
+    <if test="#{pid} != null">pid=#{pid}</if>
+  </update>
+
+  <delete id="delete">
+    DELETE from user where uid=#{uid}
+  </delete>
+
+  <delete id="deleteProduct">
+    DELETE FROM product WHERE pid=#{pid}
+  </delete>
+
+  <delete id="deleteCategory">
+     DELETE FROM category WHERE cid=#{cid}
+  </delete>
+
+  <select id="login" resultType="com.zjitc.model.AdminUser">
+    SELECT *
+    FROM adminuser
+    WHERE username = #{username} and password=#{password}
+  </select>
+
+  <select id="findAll" resultType="com.zjitc.model.User">
+    SELECT * FROM  user
+  </select>
+
+  <select id="findOrders" resultType="com.zjitc.model.Orders">
+    SELECT * from orders
+  </select>
+
+  <select id="findAllProduct" resultType="com.zjitc.model.Product">
+    SELECT * FROM product
+  </select>
+
+  <select id="editor" resultType="com.zjitc.model.Product">
+    SELECT * FROM product WHERE pid=#{pid}
+  </select>
+
+  <select id="findAllCategory" resultType="com.zjitc.model.Category">
+    SELECT * from category
+  </select>
+</mapper>

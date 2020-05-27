@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zjitc.dao.OrderDao">
+
+  <insert id="add">
+    INSERT INTO orders
+    <trim prefix="(" suffix=")">
+      <if test="#{oid} != null">oid,</if>
+      <if test="#{total}!= null">total,</if>
+      <if test="#{ordertime}!= null">ordertime,</if>
+      <if test="#{name}!= null">name,</if>
+      <if test="#{phone}!= null">phone,</if>
+      <if test="#{addr}!= null">addr,</if>
+      <if test="#{uid}!= null">uid</if>
+    </trim>
+    VALUE
+    <trim prefix="(" suffix=")">
+      <if test="#{oid} != null">#{oid},</if>
+      <if test="#{total} != null">#{total},</if>
+      <if test="#{ordertime} != null">#{ordertime},</if>
+      <if test="#{name} != null">#{name},</if>
+      <if test="#{phone} != null">#{phone},</if>
+      <if test="#{addr} != null">#{addr},</if>
+      <if test="#{uid} != null">#{uid}</if>
+    </trim>
+  </insert>
+  <update id="payOrder">
+    UPDATE orders
+    SET
+    name = #{name},
+    phone = #{phone},
+    addr = #{addr}
+    WHERE oid = #{oid}
+  </update>
+</mapper>
